@@ -1,0 +1,12 @@
+[package]
+name = "semver_cli"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.60"
+description = "A very basic CLI tool to compare semver versions in the CLI"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+semver = "^1.0.7"
+clap = { version = "3.1.8", features = ["derive"] }
