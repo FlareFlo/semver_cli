@@ -1,3 +1,4 @@
+use std::process::exit;
 use clap::Parser;
 use semver::Version;
 
@@ -16,14 +17,30 @@ struct Args {
 	/// if the bool representation should use `true` instead of 1
 	#[clap(short, long)]
 	text: bool,
+
+	/// if the program should represent a date via the exit code
+	#[clap(short, long)]
+	exit: bool,
 }
 
 fn main() {
 	let args = Args::parse();
 
+	let translate_long = |long: String| {
+		let mut split =  long.split('.').collect::<Vec<&str>>();
+		if split.len() > 3 {
+			split.reverse();
+			let mut chunks = split.chunks(3).next().unwrap().to_vec();
+			chunks.reverse();
+			chunks.join(".").to_owned()
+		} else {
+			long
+		}
+	};
+
 	let split = &args.cmp.split(':').collect::<Vec<&str>>();
-	let base = Version::parse(&split[0]).unwrap();
-	let target = Version::parse(&split[1]).unwrap();
+	let base = Version::parse(&translate_long(split[0].to_owned())).unwrap();
+	let target = Version::parse(&translate_long(split[1].to_owned())).unwrap();
 
 	match () {
 		_ if args.verbose => {
@@ -33,6 +50,9 @@ fn main() {
 		}
 		_ if args.text => {
 			println!("{}", base < target);
+		}
+		_ if args.exit => {
+			exit(!(base < target) as i32);
 		}
 		_ => {
 			println!("{}", (base < target) as u8);
