@@ -1,0 +1,1 @@
+I don't really plan to turn this into something big, It's really just a CLI utility I needed.
