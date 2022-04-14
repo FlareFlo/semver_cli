@@ -12,6 +12,10 @@ struct Args {
 	/// long or short output, defaults to long
 	#[clap(short, long)]
 	verbose: bool,
+
+	/// if the bool representation should use `true` instead of 1
+	#[clap(short, long)]
+	text: bool,
 }
 
 fn main() {
@@ -21,11 +25,17 @@ fn main() {
 	let base = Version::parse(&split[0]).unwrap();
 	let target = Version::parse(&split[1]).unwrap();
 
-	if args.verbose {
+	match () {
+		_ if args.verbose => {
 		let age = || return if base > target { "newer" } else { "older" };
 
 		println!("Base version {base} is {} than {target}", age());
-	} else {
-		println!("{}", base < target);
+		}
+		_ if args.text => {
+			println!("{}", base < target);
+		}
+		_ => {
+			println!("{}", (base < target) as u8);
+		}
 	}
 }
