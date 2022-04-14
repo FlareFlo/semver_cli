@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/autopull.iml" filepath="$PROJECT_DIR$/.idea/autopull.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/semver_cli.iml" filepath="$PROJECT_DIR$/.idea/semver_cli.iml" />
     </modules>
   </component>
 </project>
